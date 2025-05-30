@@ -28,23 +28,32 @@ const questions = {
 
 
 const powers = {}
-for (let i = 0; i < 14; i++) powers[`2<sup>${i}</sup>`] = 2 ^ i;
+for (let i = 0; i < 14; i++) powers[`2<sup>${i}</sup>`] = 2 ** i;
 
 const items = Object.keys(questions);
 const select = () => items[Math.floor(Math.random() * items.length)];
 
 let currentQuestion = select();
+let currentPower;
 text.innerHTML = currentQuestion;
 
 function dedault_question() {
     what.textContent = "Загадки"
     const items = Object.keys(questions);
-    const select = () => items[Math.floor(Math.random() * items.length)];
+    const select_quest = () => items[Math.floor(Math.random() * items.length)];
 
-    let currentQuestion = select();
+    let currentQuestion = select_quest();
     text.innerHTML = currentQuestion;
 }
 
+function power_question() {
+    what.textContent = "Степени 2-ки"
+    const item = Object.keys(powers);
+    const select_powers = () => item[Math.floor(Math.random() * item.length)];
+
+    currentPower = select_powers();
+    text.innerHTML = currentPower;
+}
 
 
 function check_answer(event) {
@@ -54,9 +63,9 @@ function check_answer(event) {
         const answer = ans.value;
         if (answer.trim().toLocaleLowerCase() == questions[currentQuestion]) {
             status.classList.add("expand", "right");
-            currentQuestion = select();
+            currentQuestion = select_quest();
             text.innerHTML = currentQuestion;
-        } else {
+        } else{
             status.classList.add("expand", "wrong");
         }
 
@@ -68,11 +77,11 @@ function check_answer(event) {
                 status.classList.remove("wrong", "right", "expand", "hidden");
             }, 1000);
         }, 1000)
-    } else {
+    } else if (newMode == "powers"){
         const answer = ans.value;
         if (answer.trim().toLocaleLowerCase() == powers[currentPower]) {
             status.classList.add("expand", "right");
-            currentPower = select();
+            currentPower = select_powers();
             text.innerHTML = currentPower;
         } else {
             status.classList.add("expand", "wrong");
@@ -90,14 +99,7 @@ function check_answer(event) {
 }
 
 
-function power_question() {
-    what.textContent = "Степени 2-ки"
-    const items = Object.keys(powers);
-    const select = () => items[Math.floor(Math.random() * items.length)];
 
-    let currentPower = select();
-    text.innerHTML = currentPower;
-}
 
 
 document.querySelector("form").addEventListener("submit", check_answer);
