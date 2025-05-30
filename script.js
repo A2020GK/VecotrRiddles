@@ -31,9 +31,12 @@ const powers = {}
 for (let i = 0; i < 14; i++) powers[`2<sup>${i}</sup>`] = 2 ** i;
 
 const items = Object.keys(questions);
-const select = () => items[Math.floor(Math.random() * items.length)];
+const select_quest = () => items[Math.floor(Math.random() * items.length)]
 
-let currentQuestion = select();
+const item = Object.keys(powers);
+const select_powers = () => item[Math.floor(Math.random() * item.length)]
+
+let currentQuestion = select_quest();
 let currentPower;
 text.innerHTML = currentQuestion;
 
@@ -70,6 +73,7 @@ function check_answer(event) {
         }
 
         ans.value = "";
+        ans.value = "";
 
         setTimeout(() => {
             status.classList.add("hidden");
@@ -97,10 +101,6 @@ function check_answer(event) {
         }, 1000)
     }
 }
-
-
-
-
 
 document.querySelector("form").addEventListener("submit", check_answer);
 
